@@ -87,16 +87,6 @@ resource "aws_cloudwatch_log_stream" "kinesis_logs" {
   log_group_name = aws_cloudwatch_log_group.kinesis_logs.name
 }
 
-# handle the sensitivity of the hec_token variable
-data "aws_kms_secrets" "splunk_hec_token" {
-  secret {
-    name    = "hec_token"
-    payload = var.hec_token
-
-    context = var.encryption_context
-  }
-}
-
 # Role for the transformation Lambda function attached to the kinesis stream
 resource "aws_iam_role" "kinesis_firehose_lambda" {
   name        = var.kinesis_firehose_lambda_role_name
